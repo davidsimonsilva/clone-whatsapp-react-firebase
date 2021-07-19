@@ -21,13 +21,18 @@ export default () => {
     {chatId: 5, title:'fulano de Tal', image:'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png'},
   ]);
   const [activeChat, setActiveChat] = useState({});
+  const [user, setUser] =useState({
+    id: 1234,
+    avatar: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png',
+    name: 'Bonieky Larceda',
+  });
 
   return (
     <div className="app-window">
       <div className="sidebar">
 
         <header>
-          <img className="header--avatar" src="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png" alt="UserIcon" />
+          <img className="header--avatar" src={user.avatar} alt="UserIcon" />
           <div className="header--buttons">
 
             <div className="header--btn">
@@ -64,7 +69,9 @@ export default () => {
       </div>
       <div className="contentarea">
         {activeChat.chatId !== undefined &&
-          <ChatWindow />
+          <ChatWindow 
+            user={user}
+            />
         }
         {activeChat.chatId === undefined &&
           <ChatIntro />

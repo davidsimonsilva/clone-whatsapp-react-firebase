@@ -60,7 +60,6 @@ header {
 .search--input{
   background-color: #fff;
   height: 40px;
-  border-radius: 20px;
   display: flex;
   align-items: center;
   padding: 0 10px;
