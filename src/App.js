@@ -5,6 +5,9 @@ import ChatListItem from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow.js';
 import NewChat from './components/NewChat.js';
+import Login from './components/Login';
+import PropTypes from 'prop-types';
+import Api from './Api';
 
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -12,27 +15,38 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SearchIcon from '@material-ui/icons/Search';
 
 
-export default () => {
+const App = () => {
 
-  const [chatlist, setChatList] = useState([
-    {chatId: 1, title:'fulano de Tal', image:'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png'},
-    {chatId: 2, title:'fulano de Tal', image:'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png'},
-    {chatId: 3, title:'fulano de Tal', image:'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png'},
-    {chatId: 4, title:'fulano de Tal', image:'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png'},
-    {chatId: 5, title:'fulano de Tal', image:'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png'},
-  ]);
+  const [chatlist, setChatList] = useState([]);
   const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] =useState({
-    id: 1234,
-    avatar: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png',
-    name: 'Bonieky Larceda',
-  });
-
+  const [user, setUser] =useState(null);
   const [showNewChat, setShowNewChat] = useState(false);
+
+  useEffect(()=>{
+    if(user !== null){
+      let unsub = Api.onChatList(user.id, setChatList);
+      return unsub;
+    }
+    }, [user]);
 
   const handleNewChat = () => {
     setShowNewChat(true);
   }
+
+  const handleLoginData = async (u) => {
+    let newUser = {
+      id: u.uid,
+      name: u.displayName,
+      avatar: u.photoURL,
+    };
+    await Api.addUser(newUser);
+    setUser(newUser);
+  }
+
+  if(user === null) {
+    return (<Login onReceive={handleLoginData} />);
+  }
+
 
   return (
     <div className="app-window">
@@ -82,6 +96,7 @@ export default () => {
         {activeChat.chatId !== undefined &&
           <ChatWindow 
             user={user}
+            data={activeChat}
             />
         }
         {activeChat.chatId === undefined &&
@@ -91,3 +106,17 @@ export default () => {
     </div>
   );
 };
+
+App.defaultProps = {
+  onClick: () => null,
+  active: false,
+  data: null,
+};
+
+App.propTypes = {
+  onClick: PropTypes.func,
+  active: PropTypes.bool,
+  data: PropTypes.any,
+};
+
+export default App;

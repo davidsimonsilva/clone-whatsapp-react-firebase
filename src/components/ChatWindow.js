@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
+import PropTypes from 'prop-types';
 import './ChatWindow.css';
+
+import Api from '../Api';
+
 import MessageItem from './MessageItem';
 
 import SearchIcon from '@material-ui/icons/Search';
@@ -11,9 +15,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Send from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default ({user}) => {
-
+const ChatWindow = ({user, data}) => {
     const body = useRef();
 
     let recongnition = null;
@@ -25,29 +27,15 @@ export default ({user}) => {
     const [emojiOpen, setEmojiOpen] = useState(false);
     const [text, setText] = useState('');
     const [listening, setListening] = useState(false);
-    const [list, setList] = useState([
-        {author:123, body:'bla bla bla'},
-        {author:123, body:'bla bla'},
-        {author:1234, body:'bla bla bla bla'},
-        {author:123, body:'bla bla bla'},
-        {author:123, body:'bla bla'},
-        {author:1234, body:'bla bla bla bla'},
-        {author:123, body:'bla bla bla'},
-        {author:123, body:'bla bla'},
-        {author:1234, body:'bla bla bla bla'},
-        {author:123, body:'bla bla bla'},
-        {author:123, body:'bla bla'},
-        {author:1234, body:'bla bla bla bla'},
-        {author:123, body:'bla bla bla'},
-        {author:123, body:'bla bla'},
-        {author:1234, body:'bla bla bla bla'},
-        {author:123, body:'bla bla bla'},
-        {author:123, body:'bla bla'},
-        {author:1234, body:'bla bla bla bla'},
-        {author:123, body:'bla bla bla'},
-        {author:123, body:'bla bla'},
-        {author:1234, body:'bla bla bla bla'},
-    ]);
+    const [list, setList] = useState([]);
+    const [users, setUsers] = useState([]);
+
+    useEffect(()=>{
+
+        setList([]);
+        let unsub = Api.onChatContent(data.chatId, setList, setUsers);
+        return unsub;
+    }, [data.chatId]);
 
     useEffect(()=>{
         if(body.current.scrollHeight > body.current.offsetHeight){
@@ -84,8 +72,18 @@ export default ({user}) => {
         }
     }
 
-    const handleSendClick = () => {
+    const handleInputKey = (e) => {
+        if (e.keyCode === 13) {
+            handleSendClick();
+        }
+    }
 
+    const handleSendClick = () => {
+        if(text !== ''){
+            Api.sendMessage(data, user.id, 'text', text, users);
+            setText('');
+            setEmojiOpen(false);
+        }
     }
     
 
@@ -94,9 +92,9 @@ export default ({user}) => {
             <div className="chatWindow--header">
 
                 <div className="chatWindow--headerinfo">
-                    <img className="chatWindow--avatar" src="https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png" alt="" />
+                    <img className="chatWindow--avatar" src={data.image} alt="" />
                     <div className="chatWindow--name">
-                        Bonieky Lacerda
+                        {data.title}
                     </div>
                 </div>
 
@@ -166,6 +164,7 @@ export default ({user}) => {
                      placeholder="Digite uma mensagem"
                      value={text}
                      onChange={e=>setText(e.target.value)}
+                     onKeyUp={handleInputKey}
                     />
                 </div>
 
@@ -187,4 +186,18 @@ export default ({user}) => {
             </div>
         </div>
     );
-}
+};
+
+ChatWindow.defaultProps = {
+    onClick: () => null,
+    active: false,
+    data: null,
+  };
+  
+  ChatWindow.propTypes = {
+    onClick: PropTypes.func,
+    active: PropTypes.bool,
+    data: PropTypes.any,
+  };
+  
+  export default ChatWindow;

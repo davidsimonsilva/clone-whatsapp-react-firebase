@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './NewChat.css';
+import PropTypes from 'prop-types';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Api from '../Api';
 
-export default ({user, chatlist, show, setShow}) => {
-    const [list, setList] = useState ([
-        {id: 123, avatar: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png', name: 'Bonieky Larceda'},
-        {id: 123, avatar: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png', name: 'Bonieky Larceda'},
-        {id: 123, avatar: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png', name: 'Bonieky Larceda'},
-        {id: 123, avatar: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png', name: 'Bonieky Larceda'},
-        {id: 123, avatar: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png', name: 'Bonieky Larceda'},
-    ]);
+const NewChat = ({user, chatlist, show, setShow}) => {
+    const [list, setList] = useState ([]);
+
+    useEffect(()=>{
+        const getlist= async () => {
+            if(user !== null) {
+                let results = await Api.getContactList(user.id);
+                setList(results);
+            }
+
+        }
+        getlist();
+    }, [user]);
+
+    const addNewChat = async (user2) => {
+        await Api.addNewChat(user, user2);
+
+        handleClose();
+    }
 
     const handleClose = () => {
         setShow(false);
@@ -26,7 +39,7 @@ export default ({user, chatlist, show, setShow}) => {
             </div>
             <div className="newChat--list">
                 {list.map((item, key)=>(
-                    <div className="newChat--item" key={key}>
+                    <div onClick={()=> addNewChat(item)} className="newChat--item" key={key}>
                         <img className="newChat--itemavatar" src={item.avatar} alt="" />
                         <div className="newChat--itemname">{item.name}</div>
                     </div>
@@ -34,4 +47,18 @@ export default ({user, chatlist, show, setShow}) => {
             </div>
         </div>
     );
-}
+};
+
+NewChat.defaultProps = {
+    onClick: () => null,
+    active: false,
+    data: null,
+  };
+  
+  NewChat.propTypes = {
+    onClick: PropTypes.func,
+    active: PropTypes.bool,
+    data: PropTypes.any,
+  };
+  
+  export default NewChat;
