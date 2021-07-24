@@ -23,7 +23,7 @@ const App = () => {
   const [showNewChat, setShowNewChat] = useState(false);
 
   useEffect(()=>{
-    if(user !== null){
+    if(user){
       let unsub = Api.onChatList(user.id, setChatList);
       return unsub;
     }
@@ -40,7 +40,13 @@ const App = () => {
       avatar: u.photoURL,
     };
     await Api.addUser(newUser);
+    localStorage.setItem('user', newUser);
     setUser(newUser);
+  }
+
+  const userStorage = localStorage.getItem('user');
+  if (userStorage) {
+    setUser(userStorage);
   }
 
   if(user === null) {

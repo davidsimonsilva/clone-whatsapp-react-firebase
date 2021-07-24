@@ -10,7 +10,7 @@ const NewChat = ({user, chatlist, show, setShow}) => {
 
     useEffect(()=>{
         const getlist= async () => {
-            if(user !== null) {
+            if(user) {
                 let results = await Api.getContactList(user.id);
                 setList(results);
             }
