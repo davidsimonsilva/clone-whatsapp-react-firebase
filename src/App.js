@@ -16,10 +16,11 @@ import SearchIcon from '@material-ui/icons/Search';
 
 
 const App = () => {
+  const userData = JSON.parse(localStorage.getItem('userData'));
 
   const [chatlist, setChatList] = useState([]);
   const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] =useState(null);
+  const [user, setUser] =useState(userData);
   const [showNewChat, setShowNewChat] = useState(false);
 
   useEffect(()=>{
@@ -40,24 +41,19 @@ const App = () => {
       avatar: u.photoURL,
     };
     await Api.addUser(newUser);
-    localStorage.setItem('user', newUser);
+    localStorage.setItem('userData', JSON.stringify(newUser));
     setUser(newUser);
-  }
-
-  const userStorage = localStorage.getItem('user');
-  if (userStorage) {
-    setUser(userStorage);
   }
 
   if(user === null) {
     return (<Login onReceive={handleLoginData} />);
   }
 
-
   return (
     <div className="app-window">
       <div className="sidebar">
-        <NewChat 
+        <NewChat
+          user={user}
           chatlist={chatlist}
           show={showNewChat}
           setShow={setShowNewChat}

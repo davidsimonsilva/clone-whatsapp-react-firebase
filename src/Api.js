@@ -6,9 +6,17 @@ import firebaseConfig from './firebaseConfig';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
-
+const firebaseAuth = firebase.auth;
+const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 const Api = {
+    firebaseAuth: firebaseAuth,
+    loginWithGoogle: async () => {
+        return firebaseAuth().signInWithRedirect(googleProvider);
+    },
+    logout : async () => {
+        return firebaseAuth().signOut();
+    },
     fbPopup:async () => {
         const provider = new firebase.auth.FacebookAuthProvider();
         let result = await firebaseApp.auth().signInWithPopup(provider);

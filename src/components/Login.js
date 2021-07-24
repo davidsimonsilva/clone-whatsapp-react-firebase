@@ -1,22 +1,30 @@
-import React from 'react';
-import Api from '../Api';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Api from '../Api';
 import './Login.css'
-
+import reactLogo from '../images/react-logo.png'
 
 const Login = ({onReceive}) => {
-    const handleFacebookLogin = async () => {
-        let result = await Api.fbPopup();
-        if(result) {
-            onReceive(result.user);
-        } else {
-            alert("Erro!");
-        }
+    useEffect(() => {
+        Api.firebaseAuth().onAuthStateChanged(user => {
+            if (user) {
+                onReceive(user)
+            }
+        });
+    });
+
+    const handleGoogleLogin = () => {
+        Api.loginWithGoogle()
+            .catch(function (error) {
+                alert('Ocorreu um erro no login');
+                console.log(error);
+            });
     }
 
     return (
         <div className="login">
-            <button onClick={handleFacebookLogin}>Logar com Facebook</button>
+            <img src={reactLogo} alt="logo" className="logo" />
+            <button onClick={handleGoogleLogin} className="button">Entrar com google</button>
         </div>
     )
 };
@@ -25,12 +33,12 @@ Login.defaultProps = {
     onClick: () => null,
     active: false,
     data: null,
-  };
-  
-  Login.propTypes = {
+};
+
+Login.propTypes = {
     onClick: PropTypes.func,
     active: PropTypes.bool,
     data: PropTypes.any,
-  };
-  
-  export default Login;
+};
+
+export default Login;

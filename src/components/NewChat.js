@@ -53,12 +53,14 @@ NewChat.defaultProps = {
     onClick: () => null,
     active: false,
     data: null,
+    user: null,
   };
   
   NewChat.propTypes = {
     onClick: PropTypes.func,
     active: PropTypes.bool,
     data: PropTypes.any,
+    user: PropTypes.any,
   };
   
   export default NewChat;
