@@ -46,10 +46,10 @@ const Api = {
         return list;
     },
     addNewChat:async (user, user2) => {
-        let newChat = db.collection('chats'.add({
-            messages: [],
+        let newChat = await db.collection('chats').add({
+            messages:[],
             users: [user.id, user2.id],
-        }));
+        });
 
         db.collection('users').doc(user.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
@@ -121,7 +121,7 @@ const Api = {
                 let chats = [...uData.chats];
 
                 for(let e in chats) {
-                    if(chats[e].chat.id === chatData.chatId) {
+                    if(chats[e].chatId === chatData.chatId) {
                         chats[e].lastMessage = body;
                         chats[e].lastMessageDate = now;
                     }

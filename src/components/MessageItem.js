@@ -7,7 +7,7 @@ const MessageItem = ({data, user}) => {
 
     useEffect(()=>{
         if(data.date > 0) {
-            let d = new Date(data.lastMessageDate.seconds * 1000);
+            let d = new Date(data.date.seconds * 1000);
             let hours = d.getHours();
             let minutes= d.getMinutes();
             hours = hours < 10 ? '0'+hours : hours;
@@ -35,13 +35,6 @@ const MessageItem = ({data, user}) => {
         </div>
     );
 };
-
-MessageItem.defaultProps = {
-    onClick: () => null,
-    active: false,
-    data: null,
-  };
-  
   MessageItem.propTypes = {
     onClick: PropTypes.func,
     active: PropTypes.bool,

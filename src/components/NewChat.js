@@ -10,8 +10,8 @@ const NewChat = ({user, chatlist, show, setShow}) => {
 
     useEffect(()=>{
         const getlist= async () => {
-            if(user) {
-                let results = await Api.getContactList(user.id);
+            if(user !== null) {
+                let results = await Api.getContactList(user.id)
                 setList(results);
             }
 
@@ -49,13 +49,6 @@ const NewChat = ({user, chatlist, show, setShow}) => {
     );
 };
 
-NewChat.defaultProps = {
-    onClick: () => null,
-    active: false,
-    data: null,
-    user: null,
-  };
-  
   NewChat.propTypes = {
     onClick: PropTypes.func,
     active: PropTypes.bool,

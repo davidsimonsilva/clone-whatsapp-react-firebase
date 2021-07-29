@@ -20,9 +20,9 @@ const App = () => {
 
   const [chatlist, setChatList] = useState([]);
   const [activeChat, setActiveChat] = useState({});
-  const [user, setUser] =useState(userData);
+  const [user, setUser] = useState(userData);
   const [showNewChat, setShowNewChat] = useState(false);
-
+ 
   useEffect(()=>{
     if(user){
       let unsub = Api.onChatList(user.id, setChatList);
@@ -38,7 +38,7 @@ const App = () => {
     let newUser = {
       id: u.uid,
       name: u.displayName,
-      avatar: u.photoURL,
+      avatar: u.photoURL
     };
     await Api.addUser(newUser);
     localStorage.setItem('userData', JSON.stringify(newUser));
@@ -90,7 +90,7 @@ const App = () => {
           active={activeChat.chatId === chatlist[key].chatId}
           onClick={()=>setActiveChat(chatlist[key])}
         />
-          ))};
+          ))}
       </div>
 
       </div>
