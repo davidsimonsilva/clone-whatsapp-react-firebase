@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# Clone Whatsapp - React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é um projeto desenvolvido em React como o clone da interface do Whatsapp onde possui as funções básicas do mesmo.
 
-## Available Scripts
+Você precisara entrar com uma conta do Google para acessar o site.
 
-In the project directory, you can run:
+![Imagem do projeto](https://i.imgur.com/EvAv7tF.jpg)
 
-### `npm start`
+Após logar com o Google você podera realizar uma nova conversa apenas com amigos que tem conta Google apertando no icone de Balão de conversa que esta na direita da sua imagem de perfil.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![Imagem do projeto](https://i.imgur.com/ymTj9o6.jpg)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Então você pode iniciar uma conversa.
 
-### `npm test`
+![Imagem do projeto](https://i.imgur.com/MMwdXqA.jpg)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+O projeto está hospedado na vercel para visualização online. Você pode acessar o projeto nesse website:
 
-### `npm run build`
+[Abrir link no site da vercel](https://clone-whatsapp-react-firebase.vercel.app/)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Startup
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Para rodar o projeto local.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Clonar o projeto
 
-### `npm run eject`
+```bash
+$ git clone https://github.com/davidsimonsilva/clone-whatsapp-react-firebase && cd clone-whatsapp-react-firebase
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Dependências
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Agora você instala as dependências do projeto no npm.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```bash
+$ npm i
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Rodando
 
-## Learn More
+Agora pode subir o ambiente.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+$ npm run start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+É isso.
